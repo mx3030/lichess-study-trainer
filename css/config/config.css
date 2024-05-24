@@ -1,0 +1,17 @@
+.config-container{
+    display: none;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 40px;
+    padding: 50px;
+    width: calc(var(--main-size) - 1px);
+    heigth: 100%;
+    background-color: var(--color-bg);
+    border: solid var(--color-grey) 2px;
+    font-size: 28px;
+}
+
+.config-container.active {
+    display: flex;
+}

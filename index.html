@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Lichess Study Trainer</title>
+        <link href="https://cdn.jsdelivr.net/npm/chessground@9.1.1/assets/chessground.base.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/chessground@9.1.1/assets/chessground.brown.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/chessground@9.1.1/assets/chessground.cburnett.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/spin.js@4.1.1/spin.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="/css/colors.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/buttons.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/config/config.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/config/load.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/config/settings.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/board.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/progress.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    </head>
+    <body class="theme-onedark">
+        <div id="mainContainer">
+            <div id="buttonBarContainer">
+                <div style="display: flex; flex-direction: column; gap: 15px">
+                    <button id="loadButton" class="button-bar-button config-button" data-container="loadContainer">
+                        <span class="material-symbols-outlined">folder_open</span>
+                    </button> 
+                    <button id="settingsButton" class="button-bar-button config-button" data-container="settingsContainer"> 
+                        <span class="material-symbols-outlined">settings</span>
+                    </button> 
+                    <button id="infoButton" class="button-bar-button config-button" data-container="infoContainer"> 
+                        <span class="material-symbols-outlined">info_i</span>
+                    </button>
+                    <button id="helpButton" class="button-bar-button config-button" data-container="helpContainer">
+                        <span class="material-symbols-outlined">question_mark</span>
+                    </button>
+                </div>
+                <div>
+                    <button id="playButton" class="play-pause-button hide">
+                        <span class="material-symbols-outlined">play_arrow</span>
+                    </button>
+                    <button id="pauseButton" class="play-pause-button hide">
+                        <span class="material-symbols-outlined">pause</span>
+                    </button>
+                </div>
+                <div id="gameModeButtons" class="hide" style="display: flex; flex-direction: column; gap: 15px">
+                    <button id="goalButton" class="button-bar-button game-mode-button" data-state=""> 
+                        <span class="material-symbols-outlined">published_with_changes</span>
+                    </button>
+                    <button id="shuffleButton" class="button-bar-button game-mode-button"> 
+                        <span class="material-symbols-outlined">shuffle</span>
+                    </button> 
+                    <button id="filterButton" class="button-bar-button game-mode-button" data-state="">
+                        <span class="material-symbols-outlined">filter_alt</span>
+                    </button>
+                </div>
+            </div>
+            <div id="middleContainer">
+                <div class="active" id="boardContainer">
+                    <div id="chessboard"></div>
+                </div>
+                <div id="loadContainer" class="config-container">
+                    <span>Enter Lichess study link:</span>
+                    <input id="loadContainerInput" type="text" value="" name="" id=""/>
+                    <button id="loadContainerButton">Load</button>
+                </div>
+                <div id="settingsContainer" class="config-container">
+                </div>
+                <div id="infoContainer" class="config-container">
+                </div>
+                <div id="helpContainer" class="config-container">
+                </div> 
+            </div> 
+            <div id="progressContainer">
+                <div id="scoreContainer">
+                    <div id="scoreValue">0</div>
+                    <div id="scoreMax"></div>
+                </div> 
+                <history-element id="history" button-size="40" gap="10" style="flex: 1"></history-element> 
+            </div>
+        </div>
+
+        <!--JS FILES-->
+        <script charset="utf-8" src="./js/main.js" type="module"></script>
+        <script charset="utf-8" src="./web_components/history.js"></script>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+/* css for the progress tracking of the app*/
+
+#progressContainer {
+    height: var(--main-size);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+#scoreContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    container-type: size;
+}
+
+#scoreValue {
+    height: 50%;
+    font-size: 60cqh;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    /*border: solid white;*/
+}
+
+#scoreMax {
+    color: var(--color-grey);
+    height: 32px;
+    font-size: 32px;
+    opacity: 0.5;
+    text-align: start;
+    margin-left: 70%;
+    /*border: solid white;*/
+}

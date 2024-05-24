@@ -1,0 +1,17 @@
+#loadContainerInput{
+    background-color: var(--color-bg);
+    border: solid var(--color-grey) 1px;
+    width: 100%;
+    padding: 10px;
+    color: var(--color-grey);
+    font-size: inherit;
+}
+
+#loadContainerButton{
+    background-color: var(--color-grey);
+    color: var(--color-bg);
+    border: none;
+    border-radius: 0;
+    padding: 15px;
+    font-size: inherit;
+}
