@@ -14,8 +14,8 @@ html, body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: var(--color-bg);
-    color: var(--color-grey);
+    background-color: var(--color-dark);
+    color: var(--color-light);
     font-family: Arial;
 }
 

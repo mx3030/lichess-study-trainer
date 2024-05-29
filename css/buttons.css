@@ -1,7 +1,3 @@
-/* css for configuration for the buttons*/
-
-/* google icons setting */
-/* class name is forced */
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,
@@ -23,8 +19,8 @@
 }
 
 .button-bar-button {
-    background: var(--color-bg);
-    border: solid var(--color-grey) 2px;
+    background: var(--color-dark);
+    border: solid var(--color-light) 2px;
     border-radius: 0;
     padding: 5px;
     height: 50px;
@@ -34,11 +30,21 @@
     align-items: center;
 }
 
-/*----------------------------------------------------------------------------*/
-/* play/pause*/
-/*----------------------------------------------------------------------------*/
-.play-pause-button { 
-    color: var(--color-bg);
+.button-bar-button span {
+    color: var(--color-light);
+}
+
+/* buttons clicked*/
+.button-bar-button.active {
+    background: var(--color-light);
+}
+
+.button-bar-button.active span {
+    color: var(--color-dark);
+}
+
+.start-stop-button { 
+    color: var(--color-dark);
     border: none;
     border-radius: 0;
     cursor: pointer;
@@ -48,7 +54,7 @@
     width: 50px;  
 }
 
-.play-pause-button::before {
+.start-stop-button::before {
     border-radius: inherit;
     content: '';
     filter: blur(10px);
@@ -62,65 +68,28 @@
     z-index: -1;
 }
 
-.play-pause-button:hover::before {
+.start-stop-button:hover::before {
     filter: blur(20px);
     opacity: 1;
 }
 
-#playButton {
+.start-stop-button.start {
     background: var(--color-green);
 }
 
-#playButton::before {
+.start-stop-button.start::before {
     background: var(--color-green);
 }
 
-#pauseButton {
+.start-stop-button.stop {
     background: var(--color-red);
 }
 
-#pauseButton::before {
+.start-stop-button.stop::before {
     background: var(--color-red);
 }
 
-/*----------------------------------------------------------------------------*/
-/* config button toggle*/
-/*----------------------------------------------------------------------------*/
-/* buttons unclicked*/
-.button-bar-button span {
-    color: var(--color-grey);
-}
-
-/* buttons clicked*/
-.button-bar-button.active {
-    background: var(--color-grey);
-}
-
-.button-bar-button.active span {
-    color: var(--color-bg);
-}
-
-/* overlays for the filter icon are added to the span element of the button */
-/* goal state: till-done*/
-.till-done {
-    background: var(--color-grey);
-}
-
-.till-done span {
-    color: var(--color-bg);
-}
-
-/* filter state: infinity*/
-.infinity {
-    background: var(--color-grey);
-}
-
-.infinity span {
-    color: var(--color-bg);
-}
-
-
-.infinity span::after {
+.goal-button-infinity span::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -128,30 +97,13 @@
     transform: translate(-50%, -50%) rotate(40deg);
     width: 35%;
     height: 55%;
-    background-color: var(--color-grey);
+    background-color: var(--color-light);
     border-radius: 25%;
     z-index: 0;
 
 }
 
-/* filter state: on*/
-.filter-on {
-    background: var(--color-grey);
-}
-.filter-on span {
-    color: var(--color-bg);
-}
-
-/*filter state: on-red*/
-.filter-on-red {
-    background: var(--color-grey);
-}
-
-.filter-on-red span {
-    color: var(--color-bg);
-}
-
-.filter-on-red span::after {
+.filter-button-red-dot span::after {
     content: '';
     position: absolute;
     bottom: 0; 
@@ -160,8 +112,4 @@
     height: 10px;
     background-color: var(--color-red);
     border-radius: 50%;
-}
-
-.disabled {
-    opacity: 0.6;
 }

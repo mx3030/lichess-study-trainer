@@ -1,5 +1,5 @@
 .config-container{
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
@@ -7,11 +7,7 @@
     padding: 50px;
     width: calc(var(--main-size) - 1px);
     heigth: 100%;
-    background-color: var(--color-bg);
-    border: solid var(--color-grey) 2px;
+    background-color: var(--color-dark);
+    border: solid var(--color-light) 2px;
     font-size: 28px;
-}
-
-.config-container.active {
-    display: flex;
 }

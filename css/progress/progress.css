@@ -1,0 +1,9 @@
+#progressContainer {
+    height: var(--main-size);
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+

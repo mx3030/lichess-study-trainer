@@ -12,63 +12,70 @@
         <link rel="stylesheet" href="/css/colors.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/buttons.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/board.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/config/config.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/config/load.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="/css/config/settings.css" type="text/css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/board.css" type="text/css" media="screen" title="no title" charset="utf-8">
-        <link rel="stylesheet" href="/css/progress.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/progress/progress.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/progress/score.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="/css/progress/buttonGrid.css" type="text/css" media="screen" title="no title" charset="utf-8">
     </head>
     <body class="theme-onedark">
         <div id="mainContainer">
             <div id="buttonBarContainer">
-                <div style="display: flex; flex-direction: column; gap: 15px">
-                    <button id="loadButton" class="button-bar-button config-button" data-container="loadContainer">
-                        <span class="material-symbols-outlined">folder_open</span>
-                    </button> 
-                    <button id="settingsButton" class="button-bar-button config-button" data-container="settingsContainer"> 
-                        <span class="material-symbols-outlined">settings</span>
-                    </button> 
-                    <button id="infoButton" class="button-bar-button config-button" data-container="infoContainer"> 
-                        <span class="material-symbols-outlined">info_i</span>
-                    </button>
-                    <button id="helpButton" class="button-bar-button config-button" data-container="helpContainer">
-                        <span class="material-symbols-outlined">question_mark</span>
-                    </button>
+                <div id="modeButtons" class="" style="display: flex; flex-direction: column; align-items: center; gap: 15px">
+                    <cycle-button id="startStopButton" states='[
+                        {"name": "stop", "icon": "play_arrow", "classes": ["start-stop-button", "start"]},
+                        {"name": "start", "icon": "stop", "classes": ["start-stop-button", "stop"]}
+                    ]'></cycle-button>
+                    <cycle-button id="goalButton" states='[
+                        {"name": "no-goal", "icon": "published_with_changes", "classes": ["button-bar-button"]},
+                        {"name": "all-correct", "icon": "published_with_changes", "classes": ["button-bar-button", "active"]},
+                        {"name": "infinity", "icon": "published_with_changes", "classes": ["button-bar-button", "active", "goal-button-infinity"]}
+                    ]'></cycle-button>
+                    <cycle-button id="shuffleButton" states='[
+                        {"name": "no-shuffle", "icon": "shuffle", "classes": ["button-bar-button"]},
+                        {"name": "shuffle", "icon": "shuffle", "classes": ["button-bar-button", "active"]}
+                    ]'></cycle-button>
+                    <cycle-button id="filterButton" states='[
+                        {"name": "no-filter", "icon": "filter_alt", "classes": ["button-bar-button"]},
+                        {"name": "marked", "icon": "filter_alt", "classes": ["button-bar-button", "active"]},
+                        {"name": "wrong-only", "icon": "filter_alt", "classes": ["button-bar-button", "active", "filter-button-red-dot"]}
+                    ]'></cycle-button>
                 </div>
-                <div>
-                    <button id="playButton" class="play-pause-button hide">
-                        <span class="material-symbols-outlined">play_arrow</span>
-                    </button>
-                    <button id="pauseButton" class="play-pause-button hide">
-                        <span class="material-symbols-outlined">pause</span>
-                    </button>
-                </div>
-                <div id="gameModeButtons" class="hide" style="display: flex; flex-direction: column; gap: 15px">
-                    <button id="goalButton" class="button-bar-button game-mode-button" data-state=""> 
-                        <span class="material-symbols-outlined">published_with_changes</span>
-                    </button>
-                    <button id="shuffleButton" class="button-bar-button game-mode-button"> 
-                        <span class="material-symbols-outlined">shuffle</span>
-                    </button> 
-                    <button id="filterButton" class="button-bar-button game-mode-button" data-state="">
-                        <span class="material-symbols-outlined">filter_alt</span>
-                    </button>
+                <div id="configButtons" style="display: flex; flex-direction: column; gap: 15px">
+                    <cycle-button id="loadButton" states='[
+                        {"name": "no-load", "icon": "folder_open", "classes": ["button-bar-button"], "data": "boardContainer"},
+                        {"name": "load", "icon": "folder_open", "classes": ["button-bar-button", "active"], "data": "loadContainer"}
+                    ]'></cycle-button> 
+                    <cycle-button id="settingsButton" states='[
+                        {"name": "no-settings", "icon": "settings", "classes": ["button-bar-button"], "data": "boardContainer"},
+                        {"name": "settings", "icon": "settings", "classes": ["button-bar-button", "active"], "data": "settingsContainer"}
+                    ]'></cycle-button> 
+                    <cycle-button id="infoButton" states='[
+                        {"name": "no-info", "icon": "info_i", "classes": ["button-bar-button"], "data": "boardContainer"},
+                        {"name": "info", "icon": "info_i", "classes": ["button-bar-button", "active"], "data": "infoContainer"}
+                    ]'></cycle-button>
+                    <cycle-button id="helpButton" states='[
+                        {"name": "no-help", "icon": "question_mark", "classes": ["button-bar-button"], "data": "boardContainer"},
+                        {"name": "help", "icon": "question_mark", "classes": ["button-bar-button", "active"], "data": "helpContainer"}
+                    ]'></cycle-button>
                 </div>
             </div>
             <div id="middleContainer">
-                <div class="active" id="boardContainer">
+                <div id="boardContainer">
                     <div id="chessboard"></div>
                 </div>
-                <div id="loadContainer" class="config-container">
+                <div id="loadContainer" class="config-container hide">
                     <span>Enter Lichess study link:</span>
                     <input id="loadContainerInput" type="text" value="" name="" id=""/>
                     <button id="loadContainerButton">Load</button>
                 </div>
-                <div id="settingsContainer" class="config-container">
+                <div id="settingsContainer" class="config-container hide">
                 </div>
-                <div id="infoContainer" class="config-container">
+                <div id="infoContainer" class="config-container hide">
                 </div>
-                <div id="helpContainer" class="config-container">
+                <div id="helpContainer" class="config-container hide">
                 </div> 
             </div> 
             <div id="progressContainer">
@@ -76,12 +83,15 @@
                     <div id="scoreValue">0</div>
                     <div id="scoreMax"></div>
                 </div> 
-                <history-element id="history" button-size="40" gap="10" style="flex: 1"></history-element> 
+                <div id="buttonGridContainer">
+                    <button-grid id="buttonGrid" button-size="40" gap="10" style="flex: 1"></button-grid> 
+                </div>
+                </div>
             </div>
-        </div>
 
-        <!--JS FILES-->
-        <script charset="utf-8" src="./js/main.js" type="module"></script>
-        <script charset="utf-8" src="./web_components/history.js"></script>
-    </body>
-</html>
+            <!--JS FILES-->
+            <script charset="utf-8" src="./js/main.js" type="module"></script>
+            <script charset="utf-8" src="./custom_elements/cycleButton/cycleButton.js" type="module"></script>
+            <script charset="utf-8" src="./custom_elements/buttonGrid/buttonGrid.js" type="module"></script>
+        </body>
+    </html>

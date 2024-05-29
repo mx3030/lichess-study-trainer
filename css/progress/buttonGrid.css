@@ -1,0 +1,120 @@
+#buttonGridContainer {
+    display: flex;
+    justify-content: center;
+    height: 45%;
+}
+
+button-grid {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: start;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+button-grid::-webkit-scrollbar {
+    display: none;
+}
+
+button-grid {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.button-grid-button {
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    opacity: 1;
+}
+
+.button-grid-button.selected {
+    border-width: 3px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.button-grid-button.default {
+    background: var(--color-dark);
+    color: var(--color-light);
+    border-color: var(--color-light);
+    opacity: 0.5;
+}
+
+.button-grid-button.default.selected {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    border-color: var(--color-light);
+    opacity: 1; 
+}
+
+.button-grid-button.default.filled {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    border-color: var(--color-light);
+    opacity: 1;
+}
+
+.button-grid-button.light {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    border-color: var(--color-light);
+}
+
+.button-grid-button.light.filled {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.button-grid-button.green {
+    background-color: var(--color-dark);
+    color: var(--color-green);
+    border-color: var(--color-green);
+}
+
+.button-grid-button.green.filled {
+    background-color: var(--color-green);
+    color: var(--color-dark);
+}
+
+.button-grid-button.red {
+    background-color: var(--color-dark);
+    color: var(--color-red);
+    border-color: var(--color-red);
+}
+
+.button-grid-button.red.filled {
+    background-color: var(--color-red);
+    color: var(--color-dark);
+}
+
+.button-grid-button.yellow {
+    background-color: var(--color-dark);
+    color: var(--color-yellow);
+    border-color: var(--color-yellow);
+}
+
+.button-grid-button.yellow.filled {
+    background-color: var(--color-yellow);
+    color: var(--color-dark);
+}
+
+.button-grid-button.blue {
+    background-color: var(--color-dark);
+    color: var(--color-blue);
+    border-color: var(--color-blue);
+}
+
+.button-grid-button.blue.filled {
+    background-color: var(--color-blue);
+    color: var(--color-dark);
+}
+

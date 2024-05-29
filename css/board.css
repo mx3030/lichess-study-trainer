@@ -1,10 +1,4 @@
-/* css for the chessground board in the middle of the app*/
-
 #boardContainer{
-    display: none;
-}
-
-#boardContainer.active{
     display: flex;
 }
 
