@@ -14,7 +14,7 @@ export class Game{
         this.viewHandler = viewHandler;
         this.gameArray = [];
         this.gameLength = 0;
-        this.gameIndex = -1; // counts played puzzle 
+        this.gameIndex = 0; // counts played puzzle 
         this.puzzleIndex = 0; // index of puzzle in trainingData
         this.puzzle = new Chess(); 
         this.puzzleSolution = [];
@@ -32,32 +32,32 @@ export class Game{
 
     start(){
         this.mode = this.viewHandler.mode;
-        this.createGameArray(this.mode["filter"]);
-        console.log(this.gameArray)
-        this.loadNextPuzzle();
+        this.createGameArray();
+        if(this.gameArray.length){
+            this.viewHandler.startGameView();
+            this.loadNextPuzzle();
+        } else {
+            this.stop();
+        }
     }
 
-    createGameArray(filter) {
-        let filteredArray;
-
+    createGameArray(mode) {
         // Handle filter
-        if (filter === "marked") {
-            filteredArray = this.trainingDataHandler.getArrayWithMarkedPuzzleIndices();
-        } else if (filter === "wrong-only") {
-            filteredArray = this.trainingDataHandler.getArrayWithWrongPuzzleIndices();
-        } else if (filter === "no-filter") {
-            filteredArray = this.trainingDataHandler.getArrayWithPuzzleIndices();
+        if (this.mode["filter"] === "marked") {
+            this.gameArray = this.trainingDataHandler.getArrayWithMarkedPuzzleIndices();
+        } else if (this.mode["filter"] === "wrong-only") {
+            this.gameArray = this.trainingDataHandler.getArrayWithWrongPuzzleIndices();
+        } else if (this.mode["filter"] === "no-filter") {
+            this.gameArray = this.trainingDataHandler.getArrayWithPuzzleIndices();
         }
 
         // Handle shuffle
-        if (this.mode && this.mode["shuffle"] === true) {
-            this.gameArray = this.shuffleArray(filteredArray);
-        } else {
-            this.gameArray = filteredArray;
+        if (this.mode["shuffle"] === 'shuffle') {
+            this.gameArray = this.shuffleArray(this.gameArray);
         }
 
         this.gameLength = this.gameArray.length;
-        this.gameIndex = -1;
+        this.gameIndex = 0;
     }
 
 
@@ -70,16 +70,14 @@ export class Game{
     }
 
     loadNextPuzzle(){
-        this.gameIndex++;
-        this.puzzleIndex = this.gameArray[this.gameIndex];
-        if(!this.puzzleIndex){
-            this.stop();
-        }
         if (this.gameIndex < this.gameLength){
+            this.puzzleIndex = this.gameArray[this.gameIndex];
+            this.viewHandler.selectPuzzle(this.puzzleIndex);
             // get puzzle solution
             const pgn = this.trainingDataHandler.getPuzzlePGN(this.puzzleIndex);
             this.puzzle.loadPgn(pgn);
             this.solution = this.puzzle.history({verbose:true});
+            console.log(this.solution)
             this.puzzleLength = this.solution.length;
             // set initial position
             const start_position = this.puzzle.header().FEN;
@@ -98,6 +96,7 @@ export class Game{
                 this.stop();
             }
         }
+        this.gameIndex++;
     }
 
     onMove(from, to){
@@ -147,7 +146,8 @@ export class Game{
         this.updateChessboard();
     }
 
-    stop(){
+    stop(){ 
+        this.viewHandler.startTrainingView();
         console.log("game ended")
     }
 }

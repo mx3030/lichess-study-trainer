@@ -9,6 +9,7 @@ class CycleButton extends HTMLElement {
     constructor() {
         super(); 
         this.currentStateIndex = 0;
+        this._listen = true;
     }
 
     connectedCallback(){
@@ -19,7 +20,9 @@ class CycleButton extends HTMLElement {
         this.states = JSON.parse(this.getAttribute('states'));
         this.updateButton();
         this.addEventListener('click', () => {
-            this.nextState();
+            if(this._listen){
+                this.nextState();
+            }
         });
     }
  
@@ -45,6 +48,15 @@ class CycleButton extends HTMLElement {
 
     get name() {
         return this.states[this.currentStateIndex]["name"]
+    }
+
+    set state(index){
+        this.currentStateIndex = index % this.states.length;
+        this.updateButton();
+    }
+
+    set listen(value){
+        this._listen = value; 
     }
 
 }

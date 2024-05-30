@@ -42,6 +42,7 @@ export class LoadHandler {
                     // TODO: extract lichess study url for each pgn
                     // start new training
                     this.training = new Training(trainingData, this.chessboard);
+                    localStorage.setItem('lichessStudyTrainingData', JSON.stringify(trainingData));
                     // close load dialog
                     this.loadButton.click();
                 } catch (error) {

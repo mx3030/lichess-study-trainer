@@ -1,6 +1,6 @@
 import { TrainingDataHandler } from '../app/trainingDataHandler.js'
 import { ChessboardView } from './chessboardView.js'
-import { ProgressView } from './progressView.js'
+import { ScoreView } from './scoreView.js'
 
 /**
  * During a game, the ViewHandler is the connection between the Game class and the buttonGrid. 
@@ -13,12 +13,15 @@ export class ViewHandler{
     constructor(trainingDataHandler, chessboardHandler){
         this.trainingDataHandler = trainingDataHandler;
         this.chessboardView = new ChessboardView(chessboardHandler);
-        this.progressView = new ProgressView(); 
+        this.scoreView = new ScoreView();
         this.initUIElements();
         this.setupEventListeners();
+        this.view = 'training';
     }
     
     initUIElements(){
+        this.modeButtons = document.getElementById('modeButtons');
+        this.startStopButton = document.getElementById('startStopButton');
         this.goalButton = document.getElementById('goalButton');
         this.shuffleButton = document.getElementById('shuffleButton');
         this.filterButton = document.getElementById('filterButton');
@@ -51,6 +54,31 @@ export class ViewHandler{
             "filter": this.filterButton.name
         }
     }
+    
+    startTrainingView(){
+        this.view = 'training';
+        this.modeButtons.classList.remove('hide');
+        this.startStopButton.state = 0;
+        this.goalButton.listen = true;
+        this.goalButton.classList.remove('disabled');
+        this.shuffleButton.listen = true;
+        this.shuffleButton.classList.remove('disabled');
+        this.filterButton.listen = true;
+        this.filterButton.classList.remove('disabled');
+        this.buttonGrid.selectionAllowed = true;
+    }
+
+    startGameView(){
+        this.view = 'game';
+        this.startStopButton.state = 1;
+        this.goalButton.listen = false;
+        this.goalButton.classList.add('disabled');
+        this.shuffleButton.listen = false;
+        this.shuffleButton.classList.add('disabled');
+        this.filterButton.listen = false;
+        this.filterButton.classList.add('disabled');
+        this.buttonGrid.selectionAllowed = false;
+    }
 
     onGridButtonSelected(index, value){
         // TODO: write seperate set function in trainingDataHandler, to manipulate trainingData
@@ -65,12 +93,17 @@ export class ViewHandler{
         this.trainingDataHandler.trainingData["puzzles"][index]["isMarked"] = value;
     }
 
+    selectPuzzle(index){
+        this.buttonGrid.selectButton(index);
+    }
+
     handlePuzzleResult(index, result){
         if(result){
             this.buttonGrid.colorButton(index, "green");
         } else {
             this.buttonGrid.colorButton(index, "red");
         }
+        //TODO: scoreView
     }
 
 }

@@ -23,7 +23,7 @@
     <body class="theme-onedark">
         <div id="mainContainer">
             <div id="buttonBarContainer">
-                <div id="modeButtons" class="" style="display: flex; flex-direction: column; align-items: center; gap: 15px">
+                <div id="modeButtons" class="hide">
                     <cycle-button id="startStopButton" states='[
                         {"name": "stop", "icon": "play_arrow", "classes": ["start-stop-button", "start"]},
                         {"name": "start", "icon": "stop", "classes": ["start-stop-button", "stop"]}
@@ -43,7 +43,7 @@
                         {"name": "wrong-only", "icon": "filter_alt", "classes": ["button-bar-button", "active", "filter-button-red-dot"]}
                     ]'></cycle-button>
                 </div>
-                <div id="configButtons" style="display: flex; flex-direction: column; gap: 15px">
+                <div id="configButtons">
                     <cycle-button id="loadButton" states='[
                         {"name": "no-load", "icon": "folder_open", "classes": ["button-bar-button"], "data": "boardContainer"},
                         {"name": "load", "icon": "folder_open", "classes": ["button-bar-button", "active"], "data": "loadContainer"}
@@ -68,7 +68,8 @@
                 </div>
                 <div id="loadContainer" class="config-container hide">
                     <span>Enter Lichess study link:</span>
-                    <input id="loadContainerInput" type="text" value="" name="" id=""/>
+                    <input id="loadContainerInput" type="text" autocomplete="off" value="" name="" id=""/>
+                    <!--<history></history>-->
                     <button id="loadContainerButton">Load</button>
                 </div>
                 <div id="settingsContainer" class="config-container hide">

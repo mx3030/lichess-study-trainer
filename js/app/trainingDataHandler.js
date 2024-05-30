@@ -1,7 +1,7 @@
 /**
 * A TrainingDataHandler
 * - has methods to calculate advanced stats from trainingData.
-* - has methods to apply filters for the creation of gameArrays in a Game class.
+* - has methods to apply filters for the creation of gameArrays in a Game class or the show filters in buttonGrid
 * - methods get mainly called from a View class, to rearrange buttonGrid or improve ProgressView.
 */
 
@@ -22,16 +22,13 @@ export class TrainingDataHandler{
         return array;
     }
 
-
     getArrayWithWrongPuzzleIndices(){
         const array = [];
         this._trainingData["puzzles"].forEach((puzzle, index) => {
-            console.log(puzzle)
             if(puzzle["isCorrect"]==false){
                 array.push(index);
             }
         })
-        console.log(array)
         return array;
     }
 
