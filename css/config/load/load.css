@@ -1,0 +1,58 @@
+#loadContainerButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+    padding-bottom: 20px;
+    border-bottom: solid var(--color-light) 1px;
+}
+
+.load-input{
+    background-color: var(--color-dark);
+    border: solid var(--color-light) 1px;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    color: var(--color-grey);
+    font-size: inherit;
+}
+
+.load-input.no-right{
+    border-right: none; 
+}
+
+.load-input.no-left{
+    border-left: none; 
+}
+
+.load-input.green{
+    border: solid var(--color-green) 1px;
+}
+
+.load-input.red{
+    border: solid var(--color-red) 1px;
+}
+
+.load-button {
+    height: 100%;
+    border-width: 1px;
+}
+
+.load-button.green {
+    background: var(--color-green);
+    border: none;
+}
+
+.load-button.green span {
+    color: var(--color-dark);
+}
+
+.load-button.red {
+    background: var(--color-red);
+    border: none;
+}
+
+.load-button.red span {
+    color: var(--color-dark);
+}

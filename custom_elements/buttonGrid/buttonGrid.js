@@ -93,9 +93,7 @@ class ButtonGrid extends HTMLElement {
         this.style.gap = gap + 'px';
     }
 
-    createButtonsArray() {
-        this.updateContainer();
-        this.innerHTML = '';
+    createButtonsArray() { 
         this._buttons = [];
         this._coloredButtons = [];
         this._filledButtons = [];
@@ -116,6 +114,7 @@ class ButtonGrid extends HTMLElement {
     }
 
     displayAllButtons() {
+        this.updateContainer();
         this.innerHTML = '';
         this._buttons.forEach((buttonElement) => {
             this.appendChild(buttonElement);

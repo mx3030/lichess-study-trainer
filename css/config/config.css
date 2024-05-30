@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    gap: 40px;
+    gap: 50px;
     padding: 50px;
     width: calc(var(--main-size) - 1px);
     heigth: 100%;

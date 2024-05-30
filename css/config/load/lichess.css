@@ -1,0 +1,13 @@
+#lichessContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+#generateApiKey button{
+    border: none;
+    opacity: 0.3
+}

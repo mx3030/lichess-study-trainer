@@ -1,15 +1,16 @@
-import { LichessHandler } from '../misc/lichessHandler.js';
-import { puzzleDataTemplate, trainingDataTemplate } from '../app/trainingDataHandler.js';
-import { Training } from '../app/training.js';
-import spinJs from 'https://cdn.jsdelivr.net/npm/spin.js@4.1.1/+esm';
+import { LichessApiHandler } from './lichessApiHandler.js';
+import { puzzleDataTemplate, trainingDataTemplate } from '../../app/trainingDataHandler.js';
+import { Training } from '../../app/training.js';
+import { switchConnectedButtonsInArray } from '../configHandler.js'
 
 /**
- * The load handler manages the initialization of new training sessions from lichess studies.
- */
+* The load handler manages the initialization of new training sessions from lichess studies.
+*/
+
 export class LoadHandler {
     constructor(chessboard) {
         this.chessboard = chessboard;
-        this.lichessHandler = new LichessHandler();
+        this.lichessApiHandler = new LichessApiHandler();
         this.initUIElements();
         this.setupEventListeners();
         const trainingData = this.getTrainingDataFromLocalStorage();
@@ -17,12 +18,21 @@ export class LoadHandler {
     }
 
     initUIElements() {
-        this.loadButton = document.getElementById('loadButton');
+        this.loadButton = document.getElementById('loadButton'); 
+        const loadContainerButtons = Array.from(document.getElementById('loadContainerButtons').children);
+        const loadOptions = document.getElementById('loadOptions');
+        switchConnectedButtonsInArray(loadContainerButtons, loadOptions, 0);
+        // lichessContainer
+        this.generateApiKey = document.getElementById('generateApiKey');
         this.apiKeyInput = document.getElementById('apiKeyInput');
         const apiKey = this.getApiKeyFromLocalStorage();
         this.apiKeyInput.value = apiKey ? apiKey : "";
         this.studyLinkInput = document.getElementById('studyLinkInput');
         this.studyDownloadButton = document.getElementById('studyDownloadButton');
+        this.studyDownloadButton.listen = false;
+        // folderContainer
+        // historyContainer
+        // favoriteContainer
     }
 
     setupEventListeners() {
@@ -32,8 +42,8 @@ export class LoadHandler {
             if (url !== '') {
                 try {
                     // set api key for lichessHandler
-                    this.lichessHandler.apiKey = apiKey; 
-                    let pgnString = await this.lichessHandler.getStudy(url);
+                    this.lichessApiHandler.apiKey = apiKey; 
+                    let pgnString = await this.lichessApiHandler.getStudy(url);
                     // create trainingData
                     let pgnArray = this.splitPGN(pgnString);
                     let puzzles = [];
@@ -48,6 +58,7 @@ export class LoadHandler {
                     // start new training
                     this.training = new Training(trainingData, this.chessboard);
                     localStorage.setItem('lichessStudyTrainerTrainingData', JSON.stringify(trainingData));
+                    // only store api key in localStorage, after download of study succeded
                     localStorage.setItem('lichessStudyTrainerApiKey', apiKey);
                     // close load dialog
                     this.loadButton.click();
@@ -68,13 +79,13 @@ export class LoadHandler {
 
     splitPGN(pgn) {
         let games = pgn.split('[Event');
-        let cleanGames = [];
-        for (let game of games) {
-            let trimmedGame = game.trim();
-            if (trimmedGame.length > 0) {
-                cleanGames.push('[Event' + trimmedGame);
+            let cleanGames = [];
+            for (let game of games) {
+                let trimmedGame = game.trim();
+                if (trimmedGame.length > 0) {
+                    cleanGames.push('[Event' + trimmedGame);
+                }
             }
-        }
-        return cleanGames;
+            return cleanGames;
     }
 }

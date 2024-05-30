@@ -1,14 +1,11 @@
 const cycleButtonTemplate = document.createElement('template');
 cycleButtonTemplate.innerHTML = ` 
-    <button>
-        <span class="material-symbols-outlined"></span>
-    </button>
+    <button></button>
 `;
 
 class CycleButton extends HTMLElement {
     constructor() {
         super(); 
-        this.currentStateIndex = 0;
         this._listen = true;
     }
 
@@ -16,7 +13,8 @@ class CycleButton extends HTMLElement {
         const temp = document.importNode(cycleButtonTemplate.content, true);
         this.appendChild(temp);
         this.$button = this.querySelector('button');
-        this.$icon = this.querySelector('span');
+        const state = this.getAttribute('state');
+        this.currentStateIndex = state ? parseInt(state) : 0;
         this.states = JSON.parse(this.getAttribute('states'));
         this.updateButton();
         this.addEventListener('click', () => {
@@ -29,7 +27,12 @@ class CycleButton extends HTMLElement {
     updateButton() {
         if (this.states.length > 0) {
             const currentState = this.states[this.currentStateIndex];
-            this.$icon.textContent = currentState["icon"];
+            this.$button.innerHTML = '';
+            if(currentState["googleIcon"]){
+                this.$button.innerHTML = `<span class="material-symbols-outlined">${currentState["googleIcon"]}</span>`;
+            } else if(currentState["svg"]){
+                this.$button.innerHTML = currentState["svg"];
+            }
             this.$button.className = '';
             currentState.classes.forEach(cls => this.$button.classList.add(cls));
         }
@@ -62,3 +65,6 @@ class CycleButton extends HTMLElement {
 }
 
 customElements.define('cycle-button', CycleButton);
+
+// for working with svg
+// echo '"<svg-string>"' | sed 's/"/\\"/g'
