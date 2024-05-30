@@ -32,7 +32,7 @@ export class LoadHandler {
             if (url !== '') {
                 try {
                     // set api key for lichessHandler
-                    this.lichessHandler.apiKey = this.apiKey; 
+                    this.lichessHandler.apiKey = apiKey; 
                     let pgnString = await this.lichessHandler.getStudy(url);
                     // create trainingData
                     let pgnArray = this.splitPGN(pgnString);
