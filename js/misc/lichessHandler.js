@@ -1,7 +1,12 @@
 export class LichessHandler {
-    constructor(api_key) {
+    constructor() {
+
+    }
+        
+    set apiKey(key){
+        this._apiKey = key;
         this.headers = {
-            Authorization: 'Bearer ' + api_key,
+            Authorization: 'Bearer ' + this._apiKey,
         };
     }
 

@@ -1,4 +1,11 @@
-#loadContainerInput{
+#lichessContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 50px;
+}
+.load-input{
     background-color: var(--color-dark);
     border: solid var(--color-light) 1px;
     width: 100%;

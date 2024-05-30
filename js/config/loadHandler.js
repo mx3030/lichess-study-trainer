@@ -1,4 +1,3 @@
-import { LICHESS_API_KEY } from '/config.js';
 import { LichessHandler } from '../misc/lichessHandler.js';
 import { puzzleDataTemplate, trainingDataTemplate } from '../app/trainingDataHandler.js';
 import { Training } from '../app/training.js';
@@ -10,7 +9,7 @@ import spinJs from 'https://cdn.jsdelivr.net/npm/spin.js@4.1.1/+esm';
 export class LoadHandler {
     constructor(chessboard) {
         this.chessboard = chessboard;
-        this.lichessHandler = new LichessHandler(LICHESS_API_KEY);
+        this.lichessHandler = new LichessHandler();
         this.initUIElements();
         this.setupEventListeners();
         const trainingData = this.getTrainingDataFromLocalStorage();
@@ -19,15 +18,21 @@ export class LoadHandler {
 
     initUIElements() {
         this.loadButton = document.getElementById('loadButton');
-        this.loadContainerButton = document.getElementById('loadContainerButton');
-        this.loadContainerInput = document.getElementById('loadContainerInput');
+        this.apiKeyInput = document.getElementById('apiKeyInput');
+        const apiKey = this.getApiKeyFromLocalStorage();
+        this.apiKeyInput.value = apiKey ? apiKey : "";
+        this.studyLinkInput = document.getElementById('studyLinkInput');
+        this.studyDownloadButton = document.getElementById('studyDownloadButton');
     }
 
     setupEventListeners() {
-        this.loadContainerButton.addEventListener('click', async () => {
-            let url = this.loadContainerInput.value;
+        this.studyDownloadButton.addEventListener('click', async () => {
+            let apiKey = this.apiKeyInput.value; 
+            let url = this.studyLinkInput.value;
             if (url !== '') {
                 try {
+                    // set api key for lichessHandler
+                    this.lichessHandler.apiKey = this.apiKey; 
                     let pgnString = await this.lichessHandler.getStudy(url);
                     // create trainingData
                     let pgnArray = this.splitPGN(pgnString);
@@ -42,7 +47,8 @@ export class LoadHandler {
                     // TODO: extract lichess study url for each pgn
                     // start new training
                     this.training = new Training(trainingData, this.chessboard);
-                    localStorage.setItem('lichessStudyTrainingData', JSON.stringify(trainingData));
+                    localStorage.setItem('lichessStudyTrainerTrainingData', JSON.stringify(trainingData));
+                    localStorage.setItem('lichessStudyTrainerApiKey', apiKey);
                     // close load dialog
                     this.loadButton.click();
                 } catch (error) {
@@ -53,7 +59,11 @@ export class LoadHandler {
     }
 
     getTrainingDataFromLocalStorage() {
-        return JSON.parse(localStorage.getItem('lichessStudyTrainingData'));
+        return JSON.parse(localStorage.getItem('lichessStudyTrainerTrainingData'));
+    }
+
+    getApiKeyFromLocalStorage(){
+        return localStorage.getItem('lichessStudyTrainerApiKey');
     }
 
     splitPGN(pgn) {

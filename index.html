@@ -25,52 +25,71 @@
             <div id="buttonBarContainer">
                 <div id="modeButtons" class="hide">
                     <cycle-button id="startStopButton" states='[
-                        {"name": "stop", "icon": "play_arrow", "classes": ["start-stop-button", "start"]},
-                        {"name": "start", "icon": "stop", "classes": ["start-stop-button", "stop"]}
+                    {"name": "stop", "icon": "play_arrow", "classes": ["start-stop-button", "start"]},
+                    {"name": "start", "icon": "stop", "classes": ["start-stop-button", "stop"]}
                     ]'></cycle-button>
                     <cycle-button id="goalButton" states='[
-                        {"name": "no-goal", "icon": "published_with_changes", "classes": ["button-bar-button"]},
-                        {"name": "all-correct", "icon": "published_with_changes", "classes": ["button-bar-button", "active"]},
-                        {"name": "infinity", "icon": "published_with_changes", "classes": ["button-bar-button", "active", "goal-button-infinity"]}
+                    {"name": "no-goal", "icon": "published_with_changes", "classes": ["button-bar-button"]},
+                    {"name": "all-correct", "icon": "published_with_changes", "classes": ["button-bar-button", "active"]},
+                    {"name": "infinity", "icon": "published_with_changes", "classes": ["button-bar-button", "active", "goal-button-infinity"]}
                     ]'></cycle-button>
                     <cycle-button id="shuffleButton" states='[
-                        {"name": "no-shuffle", "icon": "shuffle", "classes": ["button-bar-button"]},
-                        {"name": "shuffle", "icon": "shuffle", "classes": ["button-bar-button", "active"]}
+                    {"name": "no-shuffle", "icon": "shuffle", "classes": ["button-bar-button"]},
+                    {"name": "shuffle", "icon": "shuffle", "classes": ["button-bar-button", "active"]}
                     ]'></cycle-button>
                     <cycle-button id="filterButton" states='[
-                        {"name": "no-filter", "icon": "filter_alt", "classes": ["button-bar-button"]},
-                        {"name": "marked", "icon": "filter_alt", "classes": ["button-bar-button", "active"]},
-                        {"name": "wrong-only", "icon": "filter_alt", "classes": ["button-bar-button", "active", "filter-button-red-dot"]}
+                    {"name": "no-filter", "icon": "filter_alt", "classes": ["button-bar-button"]},
+                    {"name": "marked", "icon": "filter_alt", "classes": ["button-bar-button", "active"]},
+                    {"name": "wrong-only", "icon": "filter_alt", "classes": ["button-bar-button", "active", "filter-button-red-dot"]}
                     ]'></cycle-button>
                 </div>
                 <div id="configButtons">
                     <cycle-button id="loadButton" states='[
-                        {"name": "no-load", "icon": "folder_open", "classes": ["button-bar-button"], "data": "boardContainer"},
-                        {"name": "load", "icon": "folder_open", "classes": ["button-bar-button", "active"], "data": "loadContainer"}
+                    {"name": "no-load", "icon": "folder_open", "classes": ["button-bar-button"], "data": "boardContainer"},
+                    {"name": "load", "icon": "folder_open", "classes": ["button-bar-button", "active"], "data": "loadContainer"}
                     ]'></cycle-button> 
                     <cycle-button id="settingsButton" states='[
-                        {"name": "no-settings", "icon": "settings", "classes": ["button-bar-button"], "data": "boardContainer"},
-                        {"name": "settings", "icon": "settings", "classes": ["button-bar-button", "active"], "data": "settingsContainer"}
+                    {"name": "no-settings", "icon": "settings", "classes": ["button-bar-button"], "data": "boardContainer"},
+                    {"name": "settings", "icon": "settings", "classes": ["button-bar-button", "active"], "data": "settingsContainer"}
                     ]'></cycle-button> 
                     <cycle-button id="infoButton" states='[
-                        {"name": "no-info", "icon": "info_i", "classes": ["button-bar-button"], "data": "boardContainer"},
-                        {"name": "info", "icon": "info_i", "classes": ["button-bar-button", "active"], "data": "infoContainer"}
+                    {"name": "no-info", "icon": "info_i", "classes": ["button-bar-button"], "data": "boardContainer"},
+                    {"name": "info", "icon": "info_i", "classes": ["button-bar-button", "active"], "data": "infoContainer"}
                     ]'></cycle-button>
                     <cycle-button id="helpButton" states='[
-                        {"name": "no-help", "icon": "question_mark", "classes": ["button-bar-button"], "data": "boardContainer"},
-                        {"name": "help", "icon": "question_mark", "classes": ["button-bar-button", "active"], "data": "helpContainer"}
+                    {"name": "no-help", "icon": "question_mark", "classes": ["button-bar-button"], "data": "boardContainer"},
+                    {"name": "help", "icon": "question_mark", "classes": ["button-bar-button", "active"], "data": "helpContainer"}
                     ]'></cycle-button>
                 </div>
             </div>
             <div id="middleContainer">
-                <div id="boardContainer">
+                <div id="boardContainer" class="">
                     <div id="chessboard"></div>
                 </div>
                 <div id="loadContainer" class="config-container hide">
-                    <span>Enter Lichess study link:</span>
-                    <input id="loadContainerInput" type="text" autocomplete="off" value="" name="" id=""/>
-                    <!--<history></history>-->
-                    <button id="loadContainerButton">Load</button>
+                    <div id="localFileContainer" class="hide">
+                        
+                    </div>
+                    <div id="lichessContainer">
+                        <span>Enter Lichess API Key:</span>
+                        <input id="apiKeyInput" class="load-input" type="text" autocomplete="off" value="" name="" id=""/>
+                        <span>Enter Lichess study link:</span>
+                        <input id="studyLinkInput" class="load-input" type="text" autocomplete="off" value="" name="" id=""/>
+                        <!--<history></history>-->
+                        <div id="lichessButtons">
+                            <cycle-button id="studyDownloadButton" states='[
+                                {"name": "load-try", "icon": "download", "classes": ["load-button"]},
+                                {"name": "load-success", "icon": "download", "classes": ["load-button", "green"]},
+                                {"name": "load-fail", "icon": "download", "classes": ["load-button", "red"]}
+                            ]'></cycle-button>
+                            <cycle-button id="studyFavoriteButton" states='[
+                                {"name": "no-favorite", "icon": "star", "classes": ["load-button"]},
+                                {"name": "favorite", "icon": "star", "classes": ["load-button", "star-fill"]}
+                            ]'></cycle-button>
+                        </div>
+                        
+                    </div>
+
                 </div>
                 <div id="settingsContainer" class="config-container hide">
                 </div>
@@ -86,7 +105,7 @@
                 </div> 
                 <div id="buttonGridContainer">
                     <button-grid id="buttonGrid" button-size="40" gap="10" style="flex: 1"></button-grid> 
-                </div>
+                    </div>
                 </div>
             </div>
 
