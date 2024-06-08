@@ -8,6 +8,10 @@
     font-size: 32px;
 }
 
+cycle-button.disabled {
+    opacity: 0.4
+}
+
 #buttonBarContainer {
     height: var(--main-size);
     padding-top: 5px;
@@ -58,19 +62,18 @@
     color: var(--color-dark);
 }
 
-cycle-button.disabled {
-    opacity: 0.4
-}
-
 .start-stop-button { 
     color: var(--color-dark);
     border: none;
     border-radius: 0;
-    cursor: pointer;
     outline: none;
     position: relative;
     height: 50px;
-    width: 50px;  
+    width: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .start-stop-button::before {

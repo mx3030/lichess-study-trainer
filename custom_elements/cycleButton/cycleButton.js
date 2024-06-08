@@ -15,7 +15,7 @@ class CycleButton extends HTMLElement {
         this.$button = this.querySelector('button');
         const state = this.getAttribute('state');
         this.currentStateIndex = state ? parseInt(state) : 0;
-        this.states = JSON.parse(this.getAttribute('states'));
+        this.states = JSON.parse(this.getAttribute('states')) || [];
         this.updateButton();
         this.addEventListener('click', () => {
             if(this._listen){
@@ -25,7 +25,7 @@ class CycleButton extends HTMLElement {
     }
  
     updateButton() {
-        if (this.states.length > 0) {
+        if (this.states) {
             const currentState = this.states[this.currentStateIndex];
             this.$button.innerHTML = '';
             if(currentState["googleIcon"]){

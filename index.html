@@ -112,15 +112,13 @@
                         <div id="folderContainer" class="hide">
                             <span>Load local pgn file:</span>
                             <div style="display:flex; flex-direction: row; width: 100%">
-                                 <cycle-button id="openFileBrowserButton" states='[
-                                    {"name": "open", "googleIcon": "folder_open", "classes": ["button-bar-button", "load-button"]},
-                                    {"name": "close", "googleIcon": "folder_open", "classes": ["button-bar-button", "load-button", "active"]}
+                                 <cycle-button id="fileBrowserButton" states='[
+                                    {"name": "open", "googleIcon": "folder_open", "classes": ["button-bar-button", "load-button"]}
                                 ]'></cycle-button>
-                                <input id="localFileInput" class="load-input no-left no-right" type="text" autocomplete="off" value="" name="" id=""/> 
-                                <cycle-button id="localFileDownloadButton" states='[
-                                    {"name": "load-try", "googleIcon": "download", "classes": ["button-bar-button", "load-button"]},
-                                    {"name": "load-success", "googleIcon": "download", "classes": ["button-bar-button", "load-button", "green"]},
-                                    {"name": "load-fail", "googleIcon": "download", "classes": ["button-bar-button", "load-button", "red"]}
+                                <div id="fileName" class="load-input no-left no-right"></div>
+                                <input id="fileInput" class="hide" type="file" accept=".pgn"/> 
+                                <cycle-button id="fileLoadButton" states='[
+                                    {"name": "load", "googleIcon": "download", "classes": ["button-bar-button", "load-button"]}
                                 ]'></cycle-button>
                             </div> 
                         </div>

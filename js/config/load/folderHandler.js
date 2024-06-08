@@ -1,26 +1,41 @@
-function startTraining(){
-    $('#start').addClass("d-none")
-    $('#progress').removeClass("d-none")
-    var fileInput = document.getElementById('fileInput');
-    var file = fileInput.files[0]
-    var reader = new FileReader()
-    reader.addEventListener('load', function() {
-        //run code if FileReader can get input because user selected pgn file
-        //get pgn file as string to work with pgn-parser libary from github
-        var pgn = reader.result;
-        //use pgn-parser to split games
-        var games = splitGames(pgn)
-        //save every game pgn string in array pgn_strings
-        pgn_strings = []
-        for(var i=0;i<games.length;i++){
-            var singleGame = games[i].all
-            pgn_strings.push(singleGame)
-        }
-        pgn_strings_random = shuffleArray(pgn_strings)
-        pgn_strings_random_length = pgn_strings_random.length
-        //start with first random puzzle
-        runPgn(pgn_strings_random_index)
-    });
-    reader.readAsText(file);
-}
+import { PGNHandler } from './pgnHandler.js'
+import { Training } from '../../app/training.js';
 
+export class FolderHandler {
+    constructor(training, chessboard, pgnHandler){
+        this.training = training;
+        this.chessboard = chessboard;
+        this.pgnHandler = pgnHandler;
+        this.fileReader = new FileReader();
+        this.initUIElements();
+        this.setupEventListeners();
+    }
+
+    initUIElements(){
+        this.loadButton = document.getElementById('loadButton'); 
+        this.fileBrowserButton = document.getElementById('fileBrowserButton');
+        this.fileLoadButton = document.getElementById('fileLoadButton');
+        this.fileInput = document.getElementById('fileInput');
+        this.fileName = document.getElementById('fileName');
+    }
+
+    setupEventListeners(){
+        this.fileBrowserButton.addEventListener('click', () => {
+            this.fileInput.click();
+        })
+        this.fileInput.addEventListener('change', () => {
+            let name = this.fileInput.files[0].name;
+            this.fileName.innerHTML = name;
+        })
+        this.fileLoadButton.addEventListener('click', () => {
+            let file = this.fileInput.files[0];
+            this.fileReader.readAsText(file);
+        })
+        this.fileReader.addEventListener('load', () => {
+            let pgnString = this.fileReader.result; 
+            let trainingData = this.pgnHandler.createTrainingData(pgnString); 
+            this.training = new Training(trainingData, this.chessboard);
+            this.loadButton.click();
+        })
+    }
+}

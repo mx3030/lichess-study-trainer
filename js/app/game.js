@@ -14,8 +14,9 @@ export class Game{
         this.viewHandler = viewHandler;
         this.gameArray = [];
         this.gameLength = 0;
-        this.gameIndex = 0; // counts played puzzle 
-        this.puzzleIndex = 0; // index of puzzle in trainingData
+        this.gameIndex = 0;         // counts played puzzle
+        this.gameScore = 0;         // counts solved puzzles
+        this.puzzleIndex = 0;       // index of puzzle in trainingData
         this.puzzle = new Chess(); 
         this.puzzleSolution = [];
         this.puzzleLength = 0;
@@ -107,13 +108,13 @@ export class Game{
                 this.makeOpponentMove();
             } else {
                 this.trainingDataHandler.handlePuzzleResult(this.puzzleIndex, true);
-                this.viewHandler.handlePuzzleResult(this.puzzleIndex, true);
+                this.viewHandler.handlePuzzleResult(this.puzzleIndex, true, this.gameScore, this.gameIndex);
                 this.loadNextPuzzle()
                 console.log("correct solution");
             }
         } else {
             this.trainingDataHandler.handlePuzzleResult(this.puzzleIndex, false);
-            this.viewHandler.handlePuzzleResult(this.puzzleIndex, false);
+            this.viewHandler.handlePuzzleResult(this.puzzleIndex, false, this.gameScore, this.gameIndex);
             this.loadNextPuzzle();
             console.log("wrong solution");
         }

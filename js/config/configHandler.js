@@ -26,7 +26,9 @@ export class ConfigHandler {
         const configButtons = Array.from(document.getElementById('configButtons').children);
         const middleContainer = document.getElementById('middleContainer');
         switchConnectedButtonsInArray(configButtons, middleContainer);
-        this.loadHandler = new LoadHandler(chessboard);
-        this.settingsHandler = new SettingsHandler(chessboard);
+        const loadHandler = new LoadHandler(chessboard);
+        const settingsHandler = new SettingsHandler(chessboard);
+        //const infoHandler = new InfoHandler();
+        //const helpHandler = new HelpHandler();
     }
 }

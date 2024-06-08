@@ -8,6 +8,10 @@
     border-bottom: solid var(--color-light) 1px;
 }
 
+#loadOptions {
+    width: 100%;
+}
+
 .load-input{
     background-color: var(--color-dark);
     border: solid var(--color-light) 1px;

@@ -78,6 +78,7 @@ export class ViewHandler{
         this.filterButton.listen = false;
         this.filterButton.classList.add('disabled');
         this.buttonGrid.selectionAllowed = false;
+        this.scoreView.update(0,0);
     }
 
     onGridButtonSelected(index, value){
@@ -97,13 +98,13 @@ export class ViewHandler{
         this.buttonGrid.selectButton(index);
     }
 
-    handlePuzzleResult(index, result){
+    handlePuzzleResult(index, result, gameScore, gameIndex){
         if(result){
             this.buttonGrid.colorButton(index, "green");
         } else {
             this.buttonGrid.colorButton(index, "red");
         }
-        //TODO: scoreView
+        this.scoreView.update(gameScore, gameIndex);
     }
 
 }
