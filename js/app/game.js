@@ -56,7 +56,7 @@ export class Game{
         if (this.mode["shuffle"] === 'shuffle') {
             this.gameArray = this.shuffleArray(this.gameArray);
         }
-
+        
         this.gameLength = this.gameArray.length;
         this.gameIndex = 0;
     }
@@ -78,7 +78,9 @@ export class Game{
             const pgn = this.trainingDataHandler.getPuzzlePGN(this.puzzleIndex);
             this.puzzle.loadPgn(pgn);
             this.solution = this.puzzle.history({verbose:true});
+            
             console.log(this.solution)
+            
             this.puzzleLength = this.solution.length;
             // set initial position
             const start_position = this.puzzle.header().FEN;
@@ -101,7 +103,9 @@ export class Game{
     }
 
     onMove(from, to){
+        
         console.log(from, to)
+        
         if(this.tryMove(from,to)){
             this.makeMove(); 
             if(this.moveIndex < this.puzzleLength){

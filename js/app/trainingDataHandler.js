@@ -7,16 +7,12 @@
 
 export class TrainingDataHandler{
     constructor(trainingData){
-        this._trainingData = trainingData;
+        this.trainingData = trainingData;
     }
-
-    get trainingData(){
-        return this._trainingData;
-    } 
     
     getArrayWithPuzzleIndices(){
         const array = [];
-        this._trainingData["puzzles"].forEach((puzzle, index) => {
+        this.trainingData["puzzles"].forEach((puzzle, index) => {
             array.push(index);
         })
         return array;
@@ -24,7 +20,7 @@ export class TrainingDataHandler{
 
     getArrayWithWrongPuzzleIndices(){
         const array = [];
-        this._trainingData["puzzles"].forEach((puzzle, index) => {
+        this.trainingData["puzzles"].forEach((puzzle, index) => {
             if(puzzle["isCorrect"]==false){
                 array.push(index);
             }
@@ -34,7 +30,7 @@ export class TrainingDataHandler{
 
     getArrayWithMarkedPuzzleIndices(){
         const array = [];
-        this._trainingData["puzzles"].forEach((puzzle, index) => {
+        this.trainingData["puzzles"].forEach((puzzle, index) => {
             if(puzzle["isMarked"]){
                 array.push(index);
             }
@@ -43,11 +39,11 @@ export class TrainingDataHandler{
     }
 
     getPuzzlePGN(index){
-        return this._trainingData["puzzles"][index]["pgn"]
+        return this.trainingData["puzzles"][index]["pgn"];
     }
 
     handlePuzzleResult(index, result){
-        this._trainingData["puzzles"][index]["isCorrect"] = result;
+        this.trainingData["puzzles"][index]["isCorrect"] = result;
     }
 }
 

@@ -5,7 +5,7 @@
  */
 
 export class ChessboardView{
-    constructor(){
-    
+    constructor(chessboard){
+        this.chessboard = chessboard
     }
 }

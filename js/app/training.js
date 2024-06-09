@@ -1,6 +1,5 @@
 import { Game } from './game.js'
 import { ViewHandler } from '../view/viewHandler.js'
-import { TrainingDataHandler } from './trainingDataHandler.js'
 
 /**
 * The Training gets initialized with the trainingData of a lichess study and a ChessboardHandler from a LoadHandler.
@@ -8,19 +7,21 @@ import { TrainingDataHandler } from './trainingDataHandler.js'
 */
 
 export class Training{
-    constructor(trainingData, chessboardHandler){ 
-        this.trainingDataHandler = new TrainingDataHandler(trainingData);
+    constructor(trainingDataHandler, chessboardHandler){ 
+        this.trainingDataHandler = trainingDataHandler;
         this.chessboardHandler = chessboardHandler; 
         this.viewHandler = new ViewHandler(this.trainingDataHandler, this.chessboardHandler);
         this.viewHandler.startTrainingView();
         this.startStopButton = document.getElementById('startStopButton');
-        this.startStopButton.addEventListener('click', () => { 
-            if(this.startStopButton.name == 'start') {
-                this.start();
-            } else {
-                this.stop();
-            }
-        });
+        this.startStopButton.clickCallback = (state) => this.handleStartStop(state);
+    }
+
+    handleStartStop(state){
+        if(state==1) {
+            this.start();
+        } else {
+            this.stop();
+        }
     }
 
     start(){ 
@@ -33,7 +34,9 @@ export class Training{
     }
 
     stop(){
-        this.game.stop();
+        if(this.game){
+            this.game.stop();
+        }
     }
 
 }

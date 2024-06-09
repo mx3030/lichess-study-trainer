@@ -1,18 +1,18 @@
-import { PGNHandler } from './pgnHandler.js'
 import { Training } from '../../app/training.js';
+import { PGNHandler } from './pgnHandler.js'
 
 export class FolderHandler {
     constructor(training, chessboard, pgnHandler){
         this.training = training;
         this.chessboard = chessboard;
-        this.pgnHandler = pgnHandler;
+        this.pgnHandler = new PGNHandler();
         this.fileReader = new FileReader();
         this.initUIElements();
         this.setupEventListeners();
+        this._callback = null;
     }
 
     initUIElements(){
-        this.loadButton = document.getElementById('loadButton'); 
         this.fileBrowserButton = document.getElementById('fileBrowserButton');
         this.fileLoadButton = document.getElementById('fileLoadButton');
         this.fileInput = document.getElementById('fileInput');
@@ -33,9 +33,14 @@ export class FolderHandler {
         })
         this.fileReader.addEventListener('load', () => {
             let pgnString = this.fileReader.result; 
-            let trainingData = this.pgnHandler.createTrainingData(pgnString); 
-            this.training = new Training(trainingData, this.chessboard);
-            this.loadButton.click();
+            let trainingData = this.pgnHandler.createTrainingData(pgnString);
+            if(this._callback){
+                this._callback(trainingData);
+            }
         })
+    }
+
+    set callback(func){
+        this._callback = func;
     }
 }

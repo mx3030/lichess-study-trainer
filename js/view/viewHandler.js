@@ -43,7 +43,7 @@ export class ViewHandler{
         } else if (filter=="marked"){
             this.buttonGrid.displayButtons(this.trainingDataHandler.getArrayWithMarkedPuzzleIndices());
         } else if (filter=="wrong-only"){
-            this.buttonGrid.displayButtons(this.trainingDataHandler.getArrayWithWrongPuzzleIndices())
+            this.buttonGrid.displayButtons(this.trainingDataHandler.getArrayWithWrongPuzzleIndices());
         }
     }
 
@@ -82,7 +82,6 @@ export class ViewHandler{
     }
 
     onGridButtonSelected(index, value){
-        // TODO: write seperate set function in trainingDataHandler, to manipulate trainingData
         this.trainingDataHandler.trainingData["puzzles"][index]["isSelected"] = value; 
     }
 

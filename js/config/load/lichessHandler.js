@@ -1,18 +1,20 @@
 import { LichessApiHandler } from './lichessApiHandler.js';
+import { TrainingDataHandler } from '../../app/trainingDataHandler.js'
 import { Training } from '../../app/training.js';
+import { PGNHandler } from './pgnHandler.js'
 
 export class LichessHandler {
     constructor(training, chessboard, pgnHandler) {
         this.training = training;
         this.chessboard = chessboard;
-        this.pgnHandler = pgnHandler;
+        this.pgnHandler = new PGNHandler();
         this.lichessApiHandler = new LichessApiHandler();
         this.initUIElements();
         this.setupEventListeners();
+        this._callback = null;
     }
 
     initUIElements() {  
-        this.loadButton = document.getElementById('loadButton'); 
         this.generateApiKey = document.getElementById('generateApiKey');
         this.apiKeyInput = document.getElementById('apiKeyInput');
         const apiKey = this.getApiKeyFromLocalStorage();
@@ -33,11 +35,12 @@ export class LichessHandler {
                     this.lichessApiHandler.apiKey = apiKey; 
                     let pgnString = await this.lichessApiHandler.getStudy(url);
                     let trainingData = this.pgnHandler.createTrainingData(pgnString);
-                    this.training = new Training(trainingData, this.chessboard);
+                    if(this._callback){
+                        this._callback(trainingData);
+                    }
                     localStorage.setItem('lichessStudyTrainerTrainingData', JSON.stringify(trainingData));
                     localStorage.setItem('lichessStudyTrainerApiKey', apiKey);
                     localStorage.setItem('lichessStudyTrainerURL', url);
-                    this.loadButton.click();
                 } catch (error) {
                     console.error('Failed to load study:', error);
                 }
@@ -55,5 +58,9 @@ export class LichessHandler {
 
     getURLFromLocalStorage(){
         return localStorage.getItem('lichessStudyTrainerURL');
+    }
+
+    set callback(func){
+        this._callback = func;
     }
 }

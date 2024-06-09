@@ -32,13 +32,17 @@ class ButtonGrid extends HTMLElement {
         this.connectCallbackHandler();
         this.setupEventListeners();
     }
-
-    init(buttonNames) {
-        this._buttonNames = buttonNames;
-        this.createButtonsArray();
-        this.displayAllButtons();
+    
+    updateContainer() {
+        const hostWidth = this.offsetWidth;
+        const buttonSize = this.buttonSize;
+        const gap = this.gap;
+        const numButtonsPerRow = Math.floor(hostWidth / (buttonSize + gap));
+        const containerWidth = numButtonsPerRow * buttonSize + (numButtonsPerRow - 1) * gap;
+        this.style.width = containerWidth + 'px';
+        this.style.gap = gap + 'px';
     }
-
+ 
     connectCallbackHandler(callbackHandler) {
         if (callbackHandler) {
             this.callbackHandler = callbackHandler;
@@ -66,31 +70,11 @@ class ButtonGrid extends HTMLElement {
             }
         });
     }
-
-    get buttonSize() {
-        return parseInt(this.getAttribute('button-size')) || 50;
-    }
-
-    get gap() {
-        return parseInt(this.getAttribute('gap')) || 10;
-    }
-
-    get selectedIndex() {
-        return this._selectedIndex;
-    }
-
-    set selectionAllowed(value) {
-        this._selectionAllowed = value;
-    }
-
-    updateContainer() {
-        const hostWidth = this.offsetWidth;
-        const buttonSize = this.buttonSize;
-        const gap = this.gap;
-        const numButtonsPerRow = Math.floor(hostWidth / (buttonSize + gap));
-        const containerWidth = numButtonsPerRow * buttonSize + (numButtonsPerRow - 1) * gap;
-        this.style.width = containerWidth + 'px';
-        this.style.gap = gap + 'px';
+ 
+   init(buttonNames) {
+        this._buttonNames = buttonNames;
+        this.createButtonsArray();
+        this.displayAllButtons();
     }
 
     createButtonsArray() { 
@@ -122,7 +106,7 @@ class ButtonGrid extends HTMLElement {
     }
 
     displayButtons(displayArray) {
-        // displayArray contains indexes of buttons, that should be displayed in container
+        // displayArray contains indices of buttons, that should be displayed in container
         this.updateContainer();
         this.innerHTML = '';
         displayArray.forEach((displayIndex) => {
@@ -164,12 +148,38 @@ class ButtonGrid extends HTMLElement {
         if (this._filledButtons[index] === true) {
             buttonElement.classList.remove('filled');
             this._filledButtons[index] = false;
+            this.callbackHandler.onGridButtonFilled(index, false);
         } else {
             buttonElement.classList.add('filled');
             this._filledButtons[index] = true;
+            this.callbackHandler.onGridButtonFilled(index, true);
         }
-        this.callbackHandler.onGridButtonFilled(index, this._filledButtons[index]);
     }
+
+    /*------------------------------------------------------------------------*/
+    /* GETTER */
+    /*------------------------------------------------------------------------*/
+    
+    get buttonSize() {
+        return parseInt(this.getAttribute('button-size')) || 50;
+    }
+
+    get gap() {
+        return parseInt(this.getAttribute('gap')) || 10;
+    }
+
+    get selectedIndex() {
+        return this._selectedIndex;
+    }
+    
+    /*------------------------------------------------------------------------*/
+    /* SETTER */
+    /*------------------------------------------------------------------------*/
+ 
+    set selectionAllowed(value) {
+        this._selectionAllowed = value;
+    }
+
 }
 
 customElements.define('button-grid', ButtonGrid);
