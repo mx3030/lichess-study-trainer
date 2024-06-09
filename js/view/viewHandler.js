@@ -25,6 +25,11 @@ export class ViewHandler{
         this.goalButton = document.getElementById('goalButton');
         this.shuffleButton = document.getElementById('shuffleButton');
         this.filterButton = document.getElementById('filterButton');
+        // reset button states
+        this.goalButton.state = 0;
+        this.shuffleButton.state = 0;
+        this.filterButton.state = 0;
+        // init buttonGrid
         this.buttonGrid = document.getElementById('buttonGrid');
         this.buttonGrid.connectCallbackHandler(this);
         this.buttonGrid.init(this.trainingDataHandler.getArrayWithPuzzleIndices());

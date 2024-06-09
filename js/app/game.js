@@ -42,7 +42,7 @@ export class Game{
         }
     }
 
-    createGameArray(mode) {
+    createGameArray() {
         // Handle filter
         if (this.mode["filter"] === "marked") {
             this.gameArray = this.trainingDataHandler.getArrayWithMarkedPuzzleIndices();
@@ -79,7 +79,7 @@ export class Game{
             this.puzzle.loadPgn(pgn);
             this.solution = this.puzzle.history({verbose:true});
             
-            console.log(this.solution)
+            console.log("solution", this.solution)
             
             this.puzzleLength = this.solution.length;
             // set initial position
@@ -102,10 +102,7 @@ export class Game{
         this.gameIndex++;
     }
 
-    onMove(from, to){
-        
-        console.log(from, to)
-        
+    onMove(from, to){ 
         if(this.tryMove(from,to)){
             this.makeMove(); 
             if(this.moveIndex < this.puzzleLength){
@@ -113,14 +110,14 @@ export class Game{
             } else {
                 this.trainingDataHandler.handlePuzzleResult(this.puzzleIndex, true);
                 this.viewHandler.handlePuzzleResult(this.puzzleIndex, true, this.gameScore, this.gameIndex);
+                console.log(`correct solution for puzzle ${this.puzzleIndex}`);
                 this.loadNextPuzzle()
-                console.log("correct solution");
             }
         } else {
             this.trainingDataHandler.handlePuzzleResult(this.puzzleIndex, false);
             this.viewHandler.handlePuzzleResult(this.puzzleIndex, false, this.gameScore, this.gameIndex);
+            console.log(`wrong solution for puzzle ${this.puzzleIndex}`);
             this.loadNextPuzzle();
-            console.log("wrong solution");
         }
     }
 

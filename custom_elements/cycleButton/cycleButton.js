@@ -30,7 +30,6 @@ class CycleButton extends HTMLElement {
     }
 
     handleClick() {
-        console.log("clicked")
         this.nextState();
         if (this._clickCallback) {
             this._clickCallback(this.state);
