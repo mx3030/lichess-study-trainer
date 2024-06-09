@@ -31,6 +31,16 @@ export class Game{
         });
     }
 
+    disconnectChessboard(){
+        this.chessboardHandler.chessboard.set({
+            events: {
+                move: (from, to) => null,
+            },
+            viewOnly: true
+        });
+    }
+
+
     start(){
         this.mode = this.viewHandler.mode;
         this.createGameArray();
@@ -108,6 +118,7 @@ export class Game{
             if(this.moveIndex < this.puzzleLength){
                 this.makeOpponentMove();
             } else {
+                this.gameScore++;
                 this.trainingDataHandler.handlePuzzleResult(this.puzzleIndex, true);
                 this.viewHandler.handlePuzzleResult(this.puzzleIndex, true, this.gameScore, this.gameIndex);
                 console.log(`correct solution for puzzle ${this.puzzleIndex}`);
@@ -150,6 +161,7 @@ export class Game{
 
     stop(){ 
         this.viewHandler.startTrainingView();
+        this.disconnectChessboard();
         console.log("game ended")
     }
 }
