@@ -1,17 +1,16 @@
 import { LichessApiHandler } from './lichessApiHandler.js';
-import { TrainingDataHandler } from '../../app/trainingDataHandler.js'
-import { Training } from '../../app/training.js';
-import { PGNHandler } from './pgnHandler.js'
 
 export class LichessHandler {
-    constructor(training, chessboard, pgnHandler) {
-        this.training = training;
-        this.chessboard = chessboard;
-        this.pgnHandler = new PGNHandler();
+    constructor(pgnHandler) {
+        this.pgnHandler = pgnHandler;
+        this._callback = null;
         this.lichessApiHandler = new LichessApiHandler();
         this.initUIElements();
         this.setupEventListeners();
-        this._callback = null;
+    }
+    
+    set callback(func){
+        this._callback = func;
     }
 
     initUIElements() {  
@@ -60,7 +59,5 @@ export class LichessHandler {
         return localStorage.getItem('lichessStudyTrainerURL');
     }
 
-    set callback(func){
-        this._callback = func;
-    }
+    
 }

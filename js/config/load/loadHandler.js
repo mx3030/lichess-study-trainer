@@ -1,8 +1,11 @@
-import { switchConnectedButtonsInArray } from '../configHandler.js'
+import { switchConnectedCycleButtonsInArray } from '../../misc/utils.js'
 import { TrainingDataHandler } from '../../app/trainingDataHandler.js'
-import { Training } from '../../app/training.js';
-import { LichessHandler } from './lichessHandler.js';
-import { FolderHandler } from './folderHandler.js';
+import { Training } from '../../app/training.js'
+import { PGNHandler } from './pgnHandler.js'
+import { LichessHandler } from './lichessHandler.js'
+import { FolderHandler } from './folderHandler.js'
+import { HistoryHandler } from './historyHandler.js'
+import { FavoriteHandler } from './favoriteHandler.js'
 
 /**
 * The load handler manages the initialization of new training sessions from lichess studies.
@@ -17,22 +20,25 @@ export class LoadHandler {
     }
 
     initUIElements() {
-        this.loadButton = document.getElementById('loadButton'); 
+        this.loadButton = document.getElementById('loadButton');
         const loadContainerButtons = Array.from(document.getElementById('loadContainerButtons').children);
         const loadOptions = document.getElementById('loadOptions');
-        switchConnectedButtonsInArray(loadContainerButtons, loadOptions, 0);  
+        switchConnectedCycleButtonsInArray(loadContainerButtons, loadOptions);
+        const lichessButton = document.getElementById('lichessButton');
+        lichessButton.handleClick();
     }
 
     initLoaders(chessboard){
-        this.loadButton.click();
+        this.loadButton.handleClick();
         const trainingData = this.getTrainingDataFromLocalStorage();
         this.createTraining(trainingData);
-        this.lichessHandler = new LichessHandler();
-        this.lichessHandler.callback = (data) => this.createTraining(data);
-        this.folderHandler = new FolderHandler();
-        this.folderHandler.callback = (data) => this.createTraining(data);
-        //const historyHandler = new HistoryHandler(this.training, this.chessboard);
-        //const favoriteHandler = new FavoriteHandler(this.training, this.chessboard);
+        const pgnHandler = new PGNHandler();
+        const lichessHandler = new LichessHandler(pgnHandler);
+        lichessHandler.callback = (data) => this.createTraining(data);
+        const folderHandler = new FolderHandler(pgnHandler);
+        folderHandler.callback = (data) => this.createTraining(data);
+        const historyHandler = new HistoryHandler(this.training, this.chessboard);
+        const favoriteHandler = new FavoriteHandler(this.training, this.chessboard);
     }
  
     getTrainingDataFromLocalStorage() {
@@ -43,7 +49,7 @@ export class LoadHandler {
         if(trainingData){
             this.trainingDataHandler = new TrainingDataHandler(trainingData);
             this.training = new Training(this.trainingDataHandler, this.chessboard);
-            this.loadButton.click();
+            this.loadButton.handleClick();
         }  
     }
   

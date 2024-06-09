@@ -5,10 +5,13 @@ cycleButtonTemplate.innerHTML = `
 
 class CycleButton extends HTMLElement {
     constructor() {
-        super();     
+        super();
+        this._handleClick = this.handleClick.bind(this);
+        this._listen = true; 
+        this._clickCallback = null;
     }
 
-    connectedCallback(){
+    connectedCallback() {
         const temp = document.importNode(cycleButtonTemplate.content, true);
         this.appendChild(temp);
         // render button
@@ -16,31 +19,36 @@ class CycleButton extends HTMLElement {
         this._state = parseInt(this.getAttribute('state')) || 0;
         this._states = JSON.parse(this.getAttribute('states')) || [''];
         this.render();
-        // handle button click
-        this._listen = true;
-        this._clickCallback = null;
-        this.addEventListener('click', () => {
-            if(this._listen){
-                this.nextState();
-                if(this._clickCallback){
-                    this._clickCallback(this.state)
-                }
-            }
-        });
+
+        if (this._listen) {
+            this.$button.addEventListener('click', this._handleClick);
+        }
     }
-        
+
+    disconnectedCallback() {
+        this.$button.removeEventListener('click', this._handleClick);
+    }
+
+    handleClick() {
+        console.log("clicked")
+        this.nextState();
+        if (this._clickCallback) {
+            this._clickCallback(this.state);
+        }
+    }
+
     nextState() {
         if (this._states.length > 0) {
             this._state = (this._state + 1) % this._states.length;
             this.render();
         }
-    } 
+    }
 
-    addClass(string){
+    addClass(string) {
         this.$button.classList.add(string);
     }
 
-    removeClass(string){
+    removeClass(string) {
         this.$button.classList.remove(string);
     }
 
@@ -48,63 +56,68 @@ class CycleButton extends HTMLElement {
         if (this._states.length > 0) {
             const currentState = this._states[this._state];
             this.$button.innerHTML = '';
-            if(currentState["googleIcon"]){
+            if (currentState["googleIcon"]) {
                 this.$button.innerHTML = `<span class="material-symbols-outlined">${currentState["googleIcon"]}</span>`;
-            } else if(currentState["svg"]){
+            } else if (currentState["svg"]) {
                 this.$button.innerHTML = currentState["svg"];
             }
             this.$button.className = '';
             currentState.classes.forEach(cls => this.$button.classList.add(cls));
         }
     }
-  
+
     /*------------------------------------------------------------------------*/
     /* GETTER */
     /*------------------------------------------------------------------------*/
 
-    get state(){
+    get state() {
         return this._state;
     }
 
-    get states(){
+    get states() {
         return this._states;
     }
 
     get name() {
-        return this._states[this._state]["name"]
+        return this._states[this._state]["name"];
     }
 
     get data() {
-        return this._states[this._state]["data"]
+        return this._states[this._state]["data"];
     }
-    
+
     /*------------------------------------------------------------------------*/
     /* SETTER */
     /*------------------------------------------------------------------------*/
-    
-    set listen(value){
-        this._listen = value; 
-    } 
 
-    set state(index){
+    set listen(value) {
+        if (this._listen !== value) {
+            this._listen = value;
+            if (value) {
+                this.$button.addEventListener('click', this._handleClick);
+            } else {
+                this.$button.removeEventListener('click', this._handleClick);
+            }
+        }
+    }
+
+    set state(index) {
         this._state = ((index % this._states.length) + this._states.length) % this._states.length;
         this.render();
     }
 
-    set states(array){
+    set states(array) {
         this._states = array;
         this._state = 0;
         this.render();
     }
- 
-    set clickCallback(func){
+
+    set clickCallback(func) {
         this._clickCallback = func;
     }
-
 }
 
 customElements.define('cycle-button', CycleButton);
-
 
 /*----------------------------------------------------------------------------*/
 /* additional information */
